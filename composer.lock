@@ -1,5 +1,5 @@
 {
-    "hash": "60ed7c2789b6001fb867e40b70c50ed9",
+    "hash": "b268fee05dd4a4ff13364a25c7c58d4a",
     "packages": [
         {
             "package": "docteurklein/silex-doctrine-service-providers",
@@ -56,20 +56,12 @@
         {
             "package": "silex/silex",
             "version": "dev-master",
-            "alias-pretty-version": "1.0.x-dev",
-            "alias-version": "1.0.9999999.9999999-dev"
-        },
-        {
-            "package": "silex/silex",
-            "version": "dev-master",
             "source-reference": "7241e87077639efa301e8af377bdeca1389f0f9f",
             "commit-date": "1341090876"
         },
         {
-            "package": "symfony/config",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
+            "package": "swiftmailer/swiftmailer",
+            "version": "v4.1.8"
         },
         {
             "package": "symfony/config",
@@ -98,20 +90,8 @@
         {
             "package": "symfony/form",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "symfony/form",
-            "version": "dev-master",
             "source-reference": "b02f6c4edcfc43f65ab68e56112a0dac86f6d12e",
             "commit-date": "1340892642"
-        },
-        {
-            "package": "symfony/http-foundation",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "symfony/http-foundation",
@@ -134,20 +114,8 @@
         {
             "package": "symfony/http-kernel",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "symfony/http-kernel",
-            "version": "dev-master",
             "source-reference": "3c13c8b8f78d8c0a20b1aeac5e0fb84d840ce365",
             "commit-date": "1340951895"
-        },
-        {
-            "package": "symfony/locale",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "symfony/locale",
@@ -184,12 +152,6 @@
             "version": "dev-master",
             "source-reference": "ed1a7d9118dd1ee332b485f19b920a9e0077022a",
             "commit-date": "1340625003"
-        },
-        {
-            "package": "symfony/security",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "symfony/security",

@@ -160,8 +160,23 @@ class Drink
         return $this->id;
     }
 
+    /**
+     * Decrement the quantity by one.
+     */
     public function updateQuantity()
     {
         $this->quantity--;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExhausted()
+    {
+        return $this->quantity <= 0;
+    }
+
+    public function getBiggestConsumer(){
+        
     }
 }

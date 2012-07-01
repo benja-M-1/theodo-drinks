@@ -63,6 +63,10 @@ class TransactionFactory
 
         if ($drink instanceof Drink) {
             $drink->updateQuantity();
+
+            if ($drink->isExhausted()) {
+                $this->drinkAlerter->alertIsExhausted($drink);
+            }
         }
 
         return $debit;

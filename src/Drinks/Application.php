@@ -9,11 +9,13 @@ use Silex\Provider\MonologServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
+use Silex\Provider\SwiftmailerServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Knp\Silex\ServiceProvider\DoctrineMongoDBServiceProvider;
-use Drinks\Factory\TransactionFactory;
 use Drinks\Security\Provider\UserProvider;
+use Drinks\Factory\TransactionFactory;
+use Drink\DrinkAlerter;
 
 // Controller providers usage.
 use Drinks\Provider\UserControllerProvider;
@@ -77,10 +79,18 @@ class Application extends BaseApplication
         $this->register(new FormServiceProvider());
         $this->register(new ValidatorServiceProvider());
         $this->register(new TranslationServiceProvider(), array('locale_fallback' => 'fr'));
+        $this->register(new SwiftmailerServiceProvider());
 
         $app = $this;
         $this['transaction.factory'] = $this->share(function () use ($app) {
             return new TransactionFactory($app['translator']);
+        });
+
+        $this['alerter.drink'] = $this->share(function () use ($app) {
+            $alerter = new DrinkAlerter($app['mailer'], $app['twig'], $app['logger']);
+            $alerter->setTemplatePath($app['view_dir'].'/Alerts');
+
+            return $alerter;
         });
 
         $this->configureSecurity();
