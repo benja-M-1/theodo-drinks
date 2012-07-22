@@ -18,6 +18,7 @@ use Drinks\Factory\RestockingFactory;
 use Drinks\Security\Provider\UserProvider;
 
 use Symfony\Component\Security\Http\Firewall\RememberMeListener;
+use Symfony\Component\Security\Core\Authentication\RememberMe\PersistentToken;
 
 // Controller providers usage.
 use Drinks\Provider\UserControllerProvider;
@@ -109,25 +110,52 @@ class Application extends BaseApplication
         $this['security.authentication_listener.remember_me._proto'] = $app->protect(function ($name, $options) use ($app) {
             return $app->share(function () use ($app, $options, $name) {
                 if (isset($options['token_provider'])) {
-                    $servicesClass = 'Symfony\\Component\\Security\\Http\\RememberMe\\PersistentTokenBasedRememberMeServices;';
+                    $servicesClass = 'Symfony\\Component\\Security\\Http\\RememberMe\\PersistentTokenBasedRememberMeServices';
                     unset($options['token_provider']);
                 } else {
                     $servicesClass = 'Symfony\\Component\\Security\\Http\\RememberMe\\TokenBasedRememberMeServices';
                 }
 
-                $app['security.authentication_listener.remember_me.services'] = $app->share(function () use ($app, $servicesClass, $name, $options) {
-                    $key = $options['key'];
-                    unset($options['key']);
+                $key = $options['key'];
+                unset($options['key']);
 
-                    return new $servicesClass(
+                $app['security.authentication_listener.remember_me.services'] = $app->share(function () use ($app, $servicesClass, $name, $key, $options) {
+                    $defaultOptions = array(
+                        'name' => 'REMEMBERME',
+                        'lifetime' => 31536000,
+                        'path' => '/',
+                        'domain' => null,
+                        'secure' => false,
+                        'httponly' => true,
+                        'always_remember_me' => false,
+                        'remember_me_parameter' => '_remember_me',
+                    );
+
+                    $options = array_merge($defaultOptions, $options);
+
+                    $services = new $servicesClass(
                         array($app['security.user_provider.'.$name]),
                         $key,
                         $name,
                         $options,
                         $app['logger']
                     );
-                });
 
+                    $listeners = array('logout', 'pre_auth', 'form', 'http', 'remember_me', 'anonymous');
+                    foreach ($listeners as $listener) {
+                        $id = 'security.authentication_listener.'.$name.'.'.$listener;
+
+                        if (false == in_array($id, $app->keys())) {
+                            continue;
+                        }
+
+                        if (method_exists($app[$id], 'setRememberMeServices')) {
+                            $app[$id]->setRememberMeServices($services);
+                        }
+                    }
+
+                    return $services;
+                });
 
                 return new RememberMeListener(
                     $app['security'],
@@ -149,7 +177,10 @@ class Application extends BaseApplication
                 'users'=> $this->share(function () use ($app) {
                     return new UserProvider($app['doctrine.odm.mongodb.dm'], 'Drinks\\Document\\User');
                 }),
-                'remember_me' => array('key' => isset($_SERVER['SECRET']) ? $_SERVER['SECRET'] : 'notsecrettoken')
+                'remember_me' => array(
+                    'token_provider' => 'persistant',
+                    'key'  => isset($_SERVER['SECRET']) ? $_SERVER['SECRET'] : 'notsecrettoken'
+                )
             ),
         );
     }
