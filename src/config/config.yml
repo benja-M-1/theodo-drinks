@@ -1,0 +1,8 @@
+google:
+    # Prod
+    #client_id: 636538520343.apps.googleusercontent.com
+    #secret:    MSX8ELFpeY0NH3uaraWf4VRP
+
+    # Dev
+    client_id: 636538520343-24flu6o4te3fosvunlvptvf7rl54e6ll.apps.googleusercontent.com
+    secret:    fDV2jvwETr7Ibm2R8flw5JZy
