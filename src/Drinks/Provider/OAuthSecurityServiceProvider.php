@@ -42,12 +42,12 @@ class OAuthSecurityServiceProvider extends SecurityServiceProvider
                 $app['security.authentication_listener.'.$name.'.oauth'] = $app['security.authentication_listener.oauth._proto']($name, $options);
             }
 
-            if (!isset($app['security.authentication_provider.'.$name])) {
-                $app['security.authentication_provider.'.$name] = $app['security.authentication_provider.oauth._proto']($name);
+            if (!isset($app['security.authentication_provider.'.$name.'.oauth'])) {
+                $app['security.authentication_provider.'.$name.'.oauth'] = $app['security.authentication_provider.oauth._proto']($name);
             }
 
             return array(
-                'security.authentication_provider.'.$name,
+                'security.authentication_provider.'.$name.'.oauth',
                 'security.authentication_listener.'.$name.'.oauth',
                 'security.entry_point.'.$name.'.oauth',
                 'form'

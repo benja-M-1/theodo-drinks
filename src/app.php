@@ -10,4 +10,6 @@ $app->get('/', function () use ($app) {
 })
 ->bind('homepage');
 
+$app->get('/login', function () {})->bind('login');
+
 return $app;

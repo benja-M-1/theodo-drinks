@@ -130,8 +130,12 @@ class Application extends BaseApplication
         $loader = \Symfony\Component\Yaml\Yaml::parse($this['config_dir'].'/config.yml');
 
         $this['security.firewalls'] = array(
+            'login' => array(
+                'pattern' => '^/user/login$',
+            ),
             'front' => array(
                 'pattern' => '^.*',
+                'form' => array('login_path' => '/user/login', 'check_path' => '/user/login_check'),
                 'oauth' => array(
                     'oauth_provider'    => 'google',
                     'infos_url'         => 'https://www.googleapis.com/oauth2/v1/userinfo',
